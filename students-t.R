@@ -1,4 +1,5 @@
 # Student's t distribution showing degrees of freedom vs. Normal distribution
+# figure 02-04
 
 # generate a series of numbers
 x <- seq(-5, 5, l=1000)
