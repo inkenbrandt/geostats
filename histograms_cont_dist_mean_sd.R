@@ -4,11 +4,8 @@
 # generate a series of numbers
 x <- seq(-4, 4, l=1000)
 
-
 # generate normally distributed data based on the series
 fx <- dnorm(x)
-
-
 
 # plot the normal distribution
 plot(x, fx, type="l", lty=1, xlab="x", lwd = 2,
