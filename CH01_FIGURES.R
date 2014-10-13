@@ -72,7 +72,8 @@ dev.off()
 # https://stat.ethz.ch/R-manual/R-patched/library/base/html/getwd.html
 # http://cran.r-project.org/web/packages/circular/circular.pdf
 
-library('circular', lib = 'E:/R-Portable/App/R-Portable/library')
+# import circular; this requires that these packages are installed
+library('circular')
 
 # get working directory to see where your files will be saved
 getwd()
@@ -118,8 +119,9 @@ dev.off()
 # Figure 01-07
 # from http://www.ggtern.com/2013/12/12/hello-world-2-2/
 
-library(ggplot2, lib = 'E:/R-Portable/App/R-Portable/library')
-library(ggtern, lib = 'E:/R-Portable/App/R-Portable/library')
+# import ggplot2 and ggtern; this requires that these packages are installed
+library(ggplot2)
+library(ggtern)
 
 # create figures for file
 filename <- 'Figure 01-07'
@@ -128,6 +130,7 @@ pdf(paste(fileplace,filename,'.pdf'))
 # generate ternary data points
 tri_point <- data.frame(X = runif(100), Y = runif(100), Z = runif(100))
 
+plot.new()
 # generate ternary plot
 plot <- ggtern(data = tri_point, mapping = aes(x = X, y = Y, z = Z)) + 
   geom_point() + theme_rgbg() + labs(title = 'Ternary Diagram')
@@ -142,8 +145,8 @@ dev.off()
 # Figure 01-08
 # 3D Exploded Pie Chart
 
-# import plotrix library
-library(plotrix, lib = 'E:/R-Portable/App/R-Portable/library')
+# import plotrix library; this requires that you have plotrix installed
+library(plotrix)
 
 # generate x data
 x <- c(9, 45, 6, 41)
@@ -171,3 +174,80 @@ pie3D(x,labels = labl, theta = pi/8, explode = 0.1, col = c,
 # write figures
 dev.off()
 
+####################################################################################
+# Figure 01-10
+#
+# Inspired by: http://en.wikipedia.org/wiki/Misleading_graph#mediaviewer/File:Truncated_Bar_Graph.svg
+# Inspired by: http://en.wikipedia.org/wiki/Misleading_graph#mediaviewer/File:Bar_graph.svg
+
+# create figures for file
+filename <- 'Figure 01-10'
+pdf(paste(fileplace,filename,'.pdf'))
+
+# Allow for two plots on one page 
+par(mfrow=c(1,2)) 
+
+# Make some y data
+y <- c(610,620,630,640)
+
+# Draw Short Axis Bar Plot 
+barplot(y, main = 'Shortened y-axis' , ylim = c(600,650), xpd = F, col = rainbow(15), names.arg=c('A', 'B', 'C', 'D'))
+
+# Draw Full Axis Bar Plot 
+barplot(y, main = 'Full y-axis' , ylim = c(0,700), xpd = T, col = rainbow(15), names.arg=c('A', 'B', 'C', 'D'))
+
+# write figures
+dev.off()
+
+####################################################################################
+# Figure 01-11
+#
+# Inspired by: http://en.wikipedia.org/wiki/Misleading_graph#mediaviewer/File:Line_graph2.svg
+# Inspired by: http://en.wikipedia.org/wiki/Misleading_graph#mediaviewer/File:Line_graph1.svg
+
+# Define x values
+x <- c(1:10) 
+
+# Make function defining equation of line
+boo <- function(n)(n*2+3)
+
+# Generate y values based on x and function
+y <- sapply(x,boo)
+
+# create figures for file
+filename <- 'Figure 01-11'
+pdf(paste(fileplace,filename,'.pdf'))
+
+# Allow for two plots on one page
+par(mfrow=c(1,2))  
+
+# Plot regular line and points
+plot(x, y, ylim = c(5,25), main='Slope = 2, y-axis range = 0-25', col = 'blue', yaxp = c(0,25,5)) 
+lines(x, y, type = 'l', col = 'red')
+
+# Plot exaggerated y-axis line plot and points
+plot(x, y, ylim = c(0,80), col = 'blue', main = 'Slope = 2, y-axis range = 0-80', yaxp = c(0,80,8))
+lines(x, y, type = 'l', col = 'red')
+
+# write figures
+dev.off()
+
+####################################################################################
+# Figure 01-12
+# Inspired by: http://en.wikipedia.org/wiki/Misleading_graph#mediaviewer/File:LyingXaxis.png
+
+x <- c(1994:2014)
+y <- c(500,500,500,500,400,300,200,200,200,200,200,200,300,400,500,500,500,500,500,500,500)
+
+# create figures for file
+filename <- 'Figure 01-12'
+pdf(paste(fileplace,filename,'.pdf'))
+
+# Allow for two plots on one page
+par(mfrow=c(1,2)) 
+
+plot(x, y, xlim = c(1994,2014), ylim = c(0,500), main = 'Full Plot', type = 'l', col = 'red', xaxp = c(1994,2014,5))
+plot(x, y, xlim = c(2001,2004), ylim = c(0,500), main = 'Partial Plot', type = 'l', col = 'red', xaxp = c(2001,2004,3))
+
+# write figures
+dev.off()
