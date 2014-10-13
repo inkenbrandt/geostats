@@ -1,3 +1,4 @@
+fileplace <- 'E:/STATS/Review/original figures/'
 ####################################################################################
 # Figure 05-02
 # Z-score and how it relates to the standard deviation of a normal distribution.
@@ -9,10 +10,19 @@
 # http://www.graphpad.com/guides/prism/6/statistics/index.htm?confidence_intervals.htm
 # http://www.inside-r.org/packages/cran/plotrix/docs/plotCI
 
+# define the random seed used so that the 'random' set can be reproduced
 set.seed(65)
+
+# generate 100 samples having 100 values
 NormSamp <- as.data.frame(matrix(rnorm(100*100, mean=0, sd=1), ncol=100))
+
+# generate mean of the 100 samples
 mean <- rowMeans(NormSamp[,1:100])
+
+# generate Standard deviation of the 100 samples
 sd <- apply(NormSamp[,1:100], 1, sd)
+
+# determine the upper and lower confidence intervals
 lci <- mean - sd*1.96/sqrt(100)
 uci <- mean + sd*1.96/sqrt(100)
 
@@ -108,6 +118,7 @@ pdf(paste(fileplace,filename,'.pdf'))
 #allow for stacking of figures 1 row and 2 columns in size
 par(mfrow=c(1,2))
 
+# define the dimensions of the polygons used on the normal curve
 xsrt0 <- -4
 xend0 <- 4
 xinc0 <- 0.001
@@ -185,6 +196,7 @@ dev.off()
 filename <- 'Figure 05-05'
 pdf(paste(fileplace,filename,'.pdf'))
 
+# define the dimensions of the polygons used on the normal curve
 xsrt0 <- -1.96
 xend0 <- 1.96
 xinc0 <- 0.001
@@ -203,20 +215,25 @@ xinc <- 0.001
 xdim <- c(xsrt, seq(xsrt, xend, xinc), xend) 
 ydim <- c(0, dnorm(seq(xsrt, xend, xinc)),0) 
 
+# draw the normal curve
 curve(dnorm(x), xlim = c(-4,4), main = 'Two Tailed Test\n95% Confidence', 
       ylab = 'Probability(x)', xlab = 'x', ylim=c(-0.1, 0.5)) 
 
+# draw the polygons to fill the normal curve
 polygon(xdim0, ydim0, col = 'sky blue')
 polygon(xdim1, ydim1, col = 'green')
 polygon(xdim, ydim, col = 'green')
 
+# add mean line
 lines( c(0,0), c(-0.2, 0.5), col = 'red', lty=2, lwd = 1)
 text(-0.1, 0.1, cex = 0.7, 'mean', col='red', srt = 90)
 
+# add lines bordering the polygons
 lines( c(1.96, 1.96), c(-0.2, 0.5), col = 'dark green', lty=2, lwd = 1)
 
 lines( c(-1.96, -1.96), c(-0.2, 0.5), col = 'dark green', lty=2, lwd = 1)
 
+# add arrows defining the areas and extents of the polygons
 arrows(xsrt0,-0.07,x1 = xend0, length = 0.1, angle = 20,
        code = 3, col = 'blue', lty = 1)
 text(0, -0.077, cex = 0.7, '-1.96 < x < 1.96\n95% of curve area', 
@@ -239,20 +256,54 @@ dev.off()
 # Figure 05-06
 # F-distribution
 
+# generate a sequence of x values
 x <- seq(-0.001,4,0.001)
 
-d1 <- 1
-d2 <- 1
-
-y <- df(x,d1,d2)
-
-plot(x,y,typ ='l',xlim = c(-0.1, 3), ylim = c(0,2), 
-     main = 'F Distribution\nwith varying degrees of freedom (df)')
-
+# create a list of degrees of freedom and colors for lines
 d1 <- c(1,2,100,100)
 d2 <- c(1,1,1,100)
 c <- c('black','red','green','blue')
 
+# create figures for file
+filename <- 'Figure 05-06'
+pdf(paste(fileplace,filename,'.pdf'))
+
+# plot the first line of the F distribution
+plot(x,df(x,d1[1],d2[1]),typ ='l',xlim = c(-0.1, 3), ylim = c(0,2), 
+     main = 'F Distribution\nwith varying degrees of freedom (df)')
+
+# plot the other lines for the F distribution
 for (i in 2:4) lines(x,df(x,d1[i],d2[i]),col = c[i])
 
+# add a legend
 legend('topright', paste('df1=',d1,' ','df2=',d2), text.col=c, bty = 'n')
+
+# write figures
+dev.off()
+
+####################################################################################
+# Figure 05-07
+# 
+
+# create figures for file
+filename <- 'Figure 05-06'
+pdf(paste(fileplace,filename,'.pdf'))
+
+# generate a sequence of x values
+x <- seq(0,20,0.01)
+
+# plot the normal distribution based on a mean of 15 and a population sd of 0.5
+plot(x, dnorm(x,15,0.5), typ = 'l', xlab = 'Loaf Height (cm)',
+     xlim = c(12,18), ylab = 'Probability',
+     main = 'Bread Loaf Height')
+
+# draw a line showing where 17 cm bread heights would be
+lines( c(17, 17), c(-0.2, 1.5), col = 'dark green', lty=2, lwd = 1)
+
+# print the probability that the mean of a sample of bread heights will
+# equal or exceed 17 cm
+print(1-pnorm(17,15,0.5))
+
+
+# write figures
+dev.off()
