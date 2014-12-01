@@ -1,4 +1,8 @@
-fileplace <- 'E:/STATS/Review/original figures/'
+fileplace <- 'E:/STATS/Review/Chapters/original figures/'
+sm <- 1 # for font size
+sl <- 1
+sa <- 1
+
 ####################################################################################
 # Figure 05-02
 # Z-score and how it relates to the standard deviation of a normal distribution.
