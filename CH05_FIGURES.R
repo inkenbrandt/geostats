@@ -1,4 +1,4 @@
-fileplace <- 'E:/STATS/Review/Chapters/original figures/'
+fileplace <- 'E:/STATS/Review/Chapters/original figures/Chapter_05/'
 sm <- 1 # for font size
 sl <- 1
 sa <- 1
@@ -80,7 +80,7 @@ lines( c(2,2), c(-0.05, 0.05), col = 'purple', lty=2, lwd = 1)
 text(2, 0.1, expression(2~sigma), srt = 0, cex = sl, col = 'purple')
 
 lines( c(3,3), c(-0.05, 0.00), col = 'green', lty=2, lwd = 1)
-text(3, 0.05, expression(3~sigma), srt = 0, cex = sl, col='blue')
+text(3, 0.05, expression(3~sigma), srt = 0, cex = sl, col='green')
 
 lines( c(-1,-1), c(-0.05, 0.25), col = 'blue', lty=2, lwd = 1)
 text(-1.01, 0.35, expression(-1~sigma), srt = 0, cex = sl, col='blue')
@@ -290,7 +290,7 @@ dev.off()
 # 
 
 # create figures for file
-filename <- 'Figure 05-06'
+filename <- 'Figure 05-07'
 pdf(paste(fileplace,filename,'.pdf'))
 
 # generate a sequence of x values
